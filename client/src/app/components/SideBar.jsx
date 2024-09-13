@@ -1,10 +1,6 @@
 "use client";
-// import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ThirdwebProvider } from "thirdweb/react";
 import React, { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "@/app/components/ui/sidebar";
+import { Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -13,64 +9,47 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-
+import Image from "next/image";
 import { cn } from "@/lib/utils";
-const inter = Inter({ subsets: ["latin"] });
-const links = [
-  {
-    label: "Home",
-    href: "/",
-    icon: (
-      <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    ),
-  },
-  {
-    label: "Create Campaign",
-    href: "/CreateCampaign",
-    icon: (
-      <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    ),
-  },
-  {
-    label: "Settings",
-    href: "#",
-    icon: (
-      <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    ),
-  },
-  {
-    label: "Logout",
-    href: "#",
-    icon: (
-      <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    ),
-  },
-];
 
-// export const metadata: Metadata = {
-//   title: "thirdweb SDK + Next starter",
-//   description:
-//     "Starter template for using thirdweb SDK with Next.js App router",
-// };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export function SidebarDemo() {
+  const links = [
+    {
+      label: "Dashboard",
+      href: "#",
+      icon: (
+        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Profile",
+      href: "#",
+      icon: (
+        <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Settings",
+      href: "#",
+      icon: (
+        <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Logout",
+      href: "#",
+      icon: (
+        <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+  ];
   const [open, setOpen] = useState(false);
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <main className=" overflow-x-hidden">
-        <ThirdwebProvider>
-
-
-        <div
+    (<div
       className={cn(
-        "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-screen flex-1 max-w-8xl mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+        "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 max-w-7xl mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
         // for your use case, use `h-screen` instead of `h-[60vh]`
-        "h-screen"
+        "h-[60vh]"
       )}>
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-10">
@@ -83,7 +62,7 @@ export default function RootLayout({
             </div>
           </div>
           <div>
-            {/* <SidebarLink
+            <SidebarLink
               link={{
                 label: "Manu Arora",
                 href: "#",
@@ -95,24 +74,12 @@ export default function RootLayout({
                     height={50}
                     alt="Avatar" />
                 ),
-              }} /> */}
+              }} />
           </div>
         </SidebarBody>
       </Sidebar>
-      
-      
-    {children}
-
-    </div>
-
-
-
-        
-          
-          </ThirdwebProvider>
-          </main>
-      </body>
-    </html>
+      <Dashboard />
+    </div>)
   );
 }
 export const Logo = () => {
@@ -131,7 +98,6 @@ export const Logo = () => {
     </Link>)
   );
 };
-
 export const LogoIcon = () => {
   return (
     (<Link
@@ -144,3 +110,26 @@ export const LogoIcon = () => {
 };
 
 // Dummy dashboard component with content
+const Dashboard = () => {
+  return (
+    (<div className="flex flex-1">
+      <div
+        className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
+        <div className="flex gap-2">
+          {[...new Array(4)].map((i) => (
+            <div
+              key={"first-array" + i}
+              className="h-20 w-full rounded-lg  bg-gray-100 dark:bg-neutral-800 animate-pulse"></div>
+          ))}
+        </div>
+        <div className="flex gap-2 flex-1">
+          {[...new Array(2)].map((i) => (
+            <div
+              key={"second-array" + i}
+              className="h-full w-full rounded-lg  bg-gray-100 dark:bg-neutral-800 animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    </div>)
+  );
+};
