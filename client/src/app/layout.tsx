@@ -5,6 +5,10 @@ import "./globals.css";
 import { ThirdwebProvider } from "thirdweb/react";
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/app/components/ui/sidebar";
+import { Grid2X2 } from 'lucide-react';
+import { Send } from 'lucide-react';
+import { Bitcoin } from 'lucide-react';
+import { ReceiptIndianRupee } from 'lucide-react';
 import {
   IconArrowLeft,
   IconBrandTabler,
@@ -21,21 +25,39 @@ const links = [
     label: "Home",
     href: "/",
     icon: (
-      <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <Grid2X2 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+     
     ),
   },
   {
     label: "Create Campaign",
     href: "/CreateCampaign",
     icon: (
-      <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      <Send className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+     
     ),
   },
   {
-    label: "Settings",
-    href: "#",
+    label: "Payments",
+    href: "/Payments",
     icon: (
-      <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      
+      <Bitcoin className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0"/>
+    ),
+  },
+  {
+    label: "Withdraw",
+    href: "/Withdraw",
+    icon: (
+      <ReceiptIndianRupee className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0"/>
+     
+    ),
+  },
+  {
+    label: "Profile",
+    href: "/Profile",
+    icon: (
+      <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     ),
   },
   {
@@ -100,8 +122,14 @@ export default function RootLayout({
         </SidebarBody>
       </Sidebar>
       
-      
-    {children}
+      <div className="flex flex-1 overflow-y-auto">
+    <div
+      className="p-1 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
+        {children}
+        </div>
+        </div>
+  
+    
 
     </div>
 
@@ -126,7 +154,7 @@ export const Logo = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="font-medium text-black dark:text-white whitespace-pre">
-        Acet Labs
+        Fund-Me
       </motion.span>
     </Link>)
   );
