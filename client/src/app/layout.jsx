@@ -1,13 +1,12 @@
 "use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThirdwebProvider } from "thirdweb/react";
+import { ThirdwebProvider, ChainId  } from '@thirdweb-dev/react';
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/app/components/ui/sidebar";
-import { Grid2X2 } from 'lucide-react';
-import { Send } from 'lucide-react';
-import { Bitcoin } from 'lucide-react';
-import { ReceiptIndianRupee } from 'lucide-react';
+import { Grid2X2 } from "lucide-react";
+import { Send, Bitcoin, ReceiptIndianRupee } from "lucide-react";
+import { StateContextProvider } from "@/context/index"; 
 import {
   IconArrowLeft,
   IconUserBolt,
@@ -70,55 +69,56 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className=" overflow-x-hidden">
-          <ThirdwebProvider>
-            <div
-              className={cn(
-                "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-screen flex-1 max-w-8xl mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-                "min-h-screen sticky"
-              )}
-            >
-              <Sidebar open={open} setOpen={setOpen}>
-                <SidebarBody className="justify-between gap-10 h-[98vh] ">
-                  <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden fixed">
-                    {open ? <Logo /> : <LogoIcon />}
-                    <div className="mt-8 flex flex-col gap-2">
-                      {links.map((link, idx) => (
-                        <SidebarLink key={idx} link={link} />
-                      ))}
+        <main className="overflow-x-hidden">
+        <ThirdwebProvider desiredChainId={ChainId.Sepolia}>
+            <StateContextProvider>
+              <div
+                className={cn(
+                  "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-screen flex-1 max-w-8xl mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+                  "min-h-screen sticky"
+                )}
+              >
+                <Sidebar open={open} setOpen={setOpen}>
+                  <SidebarBody className="justify-between gap-10 h-[98vh]">
+                    <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden fixed">
+                      {open ? <Logo /> : <LogoIcon />}
+                      <div className="mt-8 flex flex-col gap-2">
+                        {links.map((link, idx) => (
+                          <SidebarLink key={idx} link={link} />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex flex-col justify-end h-[95vh] fixed">
-                  <div className="  h-7 w-7  rounded-full ">
-                    <SidebarLink
-                      link={{
-                        label: "Rehbar Khan",
-                        href: "https://github.com/thisisarsh1",
-                        icon: (
-                          <div className="h-7 w-7 flex-shrink-0">
-                            <Image
-                              src="https://avatars.githubusercontent.com/u/136853370?s=400&u=8808221856e366b62f6d0c83cbef90aa793e89d5&v=4"
-                              width={28}
-                              height={28}
-                              alt="Avatar"
-                              style={{ borderRadius: "50%" }} // Use inline style for the round avatar
-                            />
-                          </div>
-                        ),
-                      }}
-                    />
-                  </div>
-                  </div>
-                  
-                </SidebarBody>
-              </Sidebar>
+                    <div className="flex flex-col justify-end h-[95vh] fixed">
+                      <div className="h-7 w-7 rounded-full">
+                        <SidebarLink
+                          link={{
+                            label: "Rehbar Khan",
+                            href: "https://github.com/thisisarsh1",
+                            icon: (
+                              <div className="h-7 w-7 flex-shrink-0">
+                                <Image
+                                  src="https://avatars.githubusercontent.com/u/136853370?s=400&u=8808221856e366b62f6d0c83cbef90aa793e89d5&v=4"
+                                  width={28}
+                                  height={28}
+                                  alt="Avatar"
+                                  style={{ borderRadius: "50%" }} // Use inline style for the round avatar
+                                />
+                              </div>
+                            ),
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </SidebarBody>
+                </Sidebar>
 
-              <div className="flex flex-1 overflow-y-auto">
-                <div className="p-1 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
-                  {children}
+                <div className="flex flex-1 overflow-y-auto">
+                  <div className="p-1 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
+                    {children}
+                  </div>
                 </div>
               </div>
-            </div>
+            </StateContextProvider>
           </ThirdwebProvider>
         </main>
       </body>
@@ -136,7 +136,7 @@ export const Logo = () => {
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="font-medium text-black dark:text-white whitespace-pre"
+        className="font-medium text-black dark:text-white"
       >
         Fund-Me
       </motion.span>

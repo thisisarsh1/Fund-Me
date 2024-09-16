@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from 'react'
 import { HandCoins } from 'lucide-react';
+import {createCampaign} from '@/context/index';
+import checkIfImageExists from '../utils';
 function page() {
   const [form,setForm]=useState({
     name:'',
@@ -18,10 +20,22 @@ function page() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log(form);
+    checkIfImageExists(form.image,async(exists)=>{
+      if (exists){
+        await createCampaign({...form,target:eth_getStorageAt.utils.parseUnits(form.target,18)});
+        console.log(form);
+      }
+      else{
+        alert('provide Valid Image Link')
+        setForm({
+          ...form,image:''
+        })
+      }
+    });
+
+   
   };
   return (
     <div className='p-2 md:p-10'>

@@ -1,6 +1,18 @@
 import React from 'react'
+import { useRouter } from 'next/navigation';
 
+import { useStateContext } from '@/context';
 function Navbar() {
+  const router=useRouter();
+  const {address,connect}=useStateContext();
+  const clickHandler = () => {
+    if (address){
+      router.push('/Profile');
+    }
+    else{
+      connect();
+    }
+  }
   return (
     <div className='bg-neutral-800 h-[8vh] w-full top-0 rounded-2xl p-1 px-2 flex justify-between '>
       
@@ -21,7 +33,7 @@ function Navbar() {
 
 
     <div className="flex ">
-  <button className="h-12 animate-shimmer items-center rounded-md border border-neutral-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:text-white ">
+  <button onClick={clickHandler()} className="h-12 animate-shimmer items-center rounded-md border border-neutral-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:text-white ">
     Connect
   </button>
 </div>
