@@ -1,4 +1,4 @@
-import React, { useContext, createContext } from "react";
+import React, { createContext, useContext } from "react";
 import {
   useAddress,
   useContract,
@@ -7,50 +7,35 @@ import {
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 
-// Create the context
 const StateContext = createContext();
 
-// Define the provider
 export const StateContextProvider = ({ children }) => {
-  // Initialize the contract using the thirdweb hook
-  const { contract } = useContract("0x7ed8F4645c3438a2b268d918fA1bD1e8C1F4C067");
-
-  // Set up the write function to call the createCampaign method on the contract
+  const { contract } = useContract(
+    "0x7ed8F4645c3438a2b268d918fA1bD1e8C1F4C067" // Ensure this is your contract address
+  );
   const { mutateAsync: createCampaign } = useContractWrite(
     contract,
     "createCampaign"
   );
-
-  // Get the user's wallet address
   const address = useAddress();
-
-  // Connect the wallet using Metamask
   const connect = useMetamask();
 
-  // Publish a new campaign
   const publishCampaign = async (form) => {
     try {
-      // Validate that the contract is loaded
-      if (!contract) throw new Error("Contract is not loaded.");
-
-      // Convert target amount to wei (smallest unit of ether)
-      const targetInWei = ethers.utils.parseEther(form.target.toString());
-
-      // Create campaign using the contract function
       const data = await createCampaign({
         args: [
-          address,                  // Campaign creator's address
-          form.title,               // Campaign title
-          form.description,         // Campaign description
-          targetInWei,              // Target amount (in wei)
-          new Date(form.deadline).getTime(),  // Deadline as a timestamp
-          form.image,               // Campaign image URL
-        ],
+					address, // owner
+					form.title, // title
+					form.description, // description
+					form.target,
+					new Date(form.deadline).getTime(), // deadline,
+					form.image,
+				],
       });
 
-      console.log("Campaign successfully created:", data);
+      console.log("Campaign created successfully:", data);
     } catch (error) {
-      console.error("Failed to create campaign:", error);
+      console.error("Error creating campaign:", error);
     }
   };
 
@@ -63,5 +48,4 @@ export const StateContextProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the context
 export const useStateContext = () => useContext(StateContext);

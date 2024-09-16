@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ConnectButton } from "thirdweb/react";
+import AnimatedPinDemo from '@/app/components/Cards';
 import thirdwebIcon from "@public/thirdweb.svg";
 import { client } from "./client";
 import Headder from '@/app/components/Headder'
@@ -40,7 +40,7 @@ export default function Home() {
           
           <Headder/>
         </div>
-        
+        <AnimatedPinDemo></AnimatedPinDemo>
         </div>
   );
 }

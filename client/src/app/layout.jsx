@@ -70,7 +70,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <main className="overflow-x-hidden">
-        <ThirdwebProvider desiredChainId={ChainId.Sepolia}>
+        <ThirdwebProvider activeChain="sepolia" clientId="1f65fe70edb6e3ff9db1eb9c6ebb9c2b">
             <StateContextProvider>
               <div
                 className={cn(

@@ -6,12 +6,10 @@ function Navbar() {
   const router=useRouter();
   const {address,connect}=useStateContext();
   const clickHandler = () => {
-    if (address){
-      router.push('/Profile');
-    }
-    else{
+    if (!address){
       connect();
     }
+   
   }
   return (
     <div className='bg-neutral-800 h-[8vh] w-full top-0 rounded-2xl p-1 px-2 flex justify-between '>
